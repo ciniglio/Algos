@@ -19,7 +19,7 @@ class Graph
   end
 
   def adjacent? (v1, v2)
-    v1.neighbors.include? v2
+    v1.neighbor? v2
   end
 
 end
@@ -30,18 +30,23 @@ class Vertex
   def initialize(data)
     @data = data
     @edges = []
+
+    # To speed up adjacency lookup, we'll add a hash with neighbors
+    # for the vertex
+    @neighbors = {}
   end
 
   def neighbors
-    neighbors = []
-    for edge in edges
-      neighbors << edge.other_end(self)
-    end
-    neighbors
+    @neighbors.keys
+  end
+
+  def neighbor? v1
+    !@neighbors[v1].nil?
   end
 
   def add_edge(edge)
     @edges << edge
+    @neighbors[edge.other_end self] = edge
   end
 end
 
