@@ -26,4 +26,11 @@ class TestHeap < Test::Unit::TestCase
     assert @h.max == 27
     assert @h.max == 26
   end
+
+  def test_heapsort
+    a = [0,4,6,7,3,2,1,5,3]
+    b = heapsort a
+    assert a.sort == b.reverse
+  end
+  
 end

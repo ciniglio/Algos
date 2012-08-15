@@ -65,4 +65,16 @@ class Heap
     @heap.size == 0
   end
 end
+
+def heapsort a
+  h = Heap.new
+  a.each do |item|
+    h.insert item
+  end
+
+  ret = []
+  until h.empty?
+    ret << h.max
+  end
+  ret
 end
