@@ -1,4 +1,5 @@
 class Heap
+
   def initialize
     @heap = []
   end
@@ -27,17 +28,21 @@ class Heap
       return
     end
 
-    if @heap[child_left] and @heap[i] < @heap[child_left]
+    if @heap[child_left] and @heap[i] < @heap[child_left] and
+       (!@heap[child_right] or @heap[child_left] >= @heap[child_right])
       swap i, child_left
       bubble_down child_left
-    elsif @heap[child_right] and @heap[i] < @heap[child_right]
+    elsif @heap[child_right] and @heap[i] < @heap[child_right] and
+          (!@heap[child_left] or @heap[child_right] >= @heap[child_left])
       swap i, child_right
       bubble_down child_right
     end
   end
 
   def delete_root
-    ret = @heap.delete_at 0
+    return if size == 0
+    swap 0, size - 1
+    ret = @heap.delete_at size - 1
     bubble_down 0
     return ret
   end
@@ -52,4 +57,12 @@ class Heap
     @heap[i2] = tmp
   end
 
+  def size
+    @heap.size
+  end
+
+  def empty?
+    @heap.size == 0
+  end
+end
 end
