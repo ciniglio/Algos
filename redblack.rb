@@ -2,9 +2,14 @@ class RBTree
   def initialize
     @leaf = Node.new(nil, :black)
     @leaf.left = @leaf.right = nil
-    @root = @leaf
+    self.root = @leaf
   end
   
+  def root=(n)
+    @root = n
+    n.parent = nil
+  end
+
   def insert(value)
     n = Node.new(value)
     n.left = n.right = @leaf
@@ -12,17 +17,17 @@ class RBTree
   end
 
   def insert_and_set_parent(node)
-    node.parent = find_parent(node)
-    if node.parent == nil
-      @root = node
+    parent = find_parent(node)
+    if parent == nil
+      self.root = node
       node.color = :black
       return
     end
     
-    if node < node.parent
-      node.parent.left = node
+    if node < parent
+      parent.left = node
     else
-      node.parent.right = node
+      parent.right = node
     end
     
     recolor(node)
@@ -41,8 +46,8 @@ class RBTree
     g = grandparent(node)
 
     if (node.parent == nil)
-      @root = node
-      @root.color = :black
+      self.root = node
+      root.color = :black
       return
     end
     
@@ -88,8 +93,7 @@ class RBTree
         p.right = node.right
       end
     else
-      @root = node.right
-      @root.parent = nil
+      self.root = node.right
     end
 
     r = node.right
@@ -111,8 +115,7 @@ class RBTree
         p.right = node.right
       end
     else
-      @root = node.left
-      @root.parent = nil
+      self.root = node.left
     end
     
     l = node.left
@@ -144,7 +147,7 @@ class RBTree
   end
 
   def to_s
-    puts dfs(@root)
+    puts dfs(root)
   end
 
   def dfs(node)

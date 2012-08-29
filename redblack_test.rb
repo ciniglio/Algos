@@ -36,6 +36,17 @@ class TestTree < Test::Unit::TestCase
     assert @t.root.color == :black
   end
 
+  def test_one_internal_right
+    @t.insert(62) #root
+    @t.insert(37) #left
+    @t.insert(100) #right
+    @t.insert(88) # uncle and parent red so make parent and gp black
+    @t.insert(76) # rotate right on 100
+    @t.insert(74)
+    @t.insert(89)
+    assert @t.root.color == :black
+  end
+
   def test_one_rotation_left
     @t.insert(17)
     @t.insert(48)
